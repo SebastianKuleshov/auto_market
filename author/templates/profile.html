@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="bg-light p-4 text-center rounded">
+                <div class="bg-secondary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 24px;">
+                    {{ user.first_name|first }}
+                </div>
+                <h5 class="mb-0">{{ user.get_full_name }}</h5>
+                <p class="text-muted small mb-3">{{ user.email }}</p>
+                <a href="{% url 'edit_profile' %}" class="btn btn-outline-dark btn-sm mb-2 w-100">Edit Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-outline-dark btn-sm w-100">Log Out</a>
+            </div>
+        </div>
+
+        
+        <div class="col-md-9">            
+            <h2 class="mb-4">My Dashboard</h2>
+            <div class="btn-group mb-4" role="group">
+                <button id="btn-purchased" class="btn btn-outline-primary active" onclick="showTab('purchased')">Purchased Cars</button>
+                <button id="btn-listed" class="btn btn-outline-primary" onclick="showTab('listed')">My Listings</button>
+            </div>
+
+            <div id="tab-purchased">
+                {% if bought_cars %}
+                <div class="row">
+                    {% for car in bought_cars %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            {% if car.image %}
+                            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ car.name }}</h5>
+                                <p><strong>Year:</strong> {{ car.year }}</p>
+                                <p><strong>Mileage:</strong> {{ car.mileage }} km</p>
+                                <p><strong>Price:</strong> ${{ car.price }}</p>
+                                <a href="{% url 'car_detail' car.id %}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No purchased cars.</p>
+                {% endif %}
+            </div>
+
+            <div id="tab-listed" style="display: none;">
+                {% if listed_cars %}
+                <div class="row">
+                    {% for car in listed_cars %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            {% if car.image %}
+                            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="card-img-top" style="height: 300px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ car.name }}</h5>
+                                <p><strong>Year:</strong> {{ car.year }}</p>
+                                <p><strong>Mileage:</strong> {{ car.mileage }} km</p>
+                                <p><strong>Price:</strong> ${{ car.price }}</p>
+                                <a href="{% url 'car_detail' car.id %}" class="btn btn-secondary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p>No active listings.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTab(tab) {
+        const purchased = document.getElementById('tab-purchased');
+        const listed = document.getElementById('tab-listed');
+
+        const btnPurchased = document.getElementById('btn-purchased');
+        const btnListed = document.getElementById('btn-listed');
+
+        if (tab === 'purchased') {
+            purchased.style.display = 'block';
+            listed.style.display = 'none';
+            btnPurchased.classList.add('active');
+            btnListed.classList.remove('active');
+        } else {
+            purchased.style.display = 'none';
+            listed.style.display = 'block';
+            btnPurchased.classList.remove('active');
+            btnListed.classList.add('active');
+        }
+    }
+</script>
+{% endblock %}
