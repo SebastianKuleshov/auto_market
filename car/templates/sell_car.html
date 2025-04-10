@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load custom_filters %}
+
+{% block title %}Продайте свій автомобіль{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="max-width: 800px;">
+
+    <h2 class="fw-bold mb-4 text-center">Продайте свій автомобіль</h2>
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li>{{ field }}: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="id_make" class="form-label">Марка</label>
+                {{ form.brand|add_class:"form-control" }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_model" class="form-label">Модель</label>
+                {{ form.name|add_class:"form-control" }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="id_year" class="form-label">Рік</label>
+                {{ form.year|add_class:"form-control" }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_price" class="form-label">Ціна (USD)</label>
+                {{ form.price|add_class:"form-control" }}
+            </div>
+
+            <div class="col-md-6">
+                <label for="id_mileage" class="form-label">Пробіг (км)</label>
+                {{ form.milage|add_class:"form-control" }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_location" class="form-label">Місцезнаходження</label>
+                {{ form.location|add_class:"form-control" }}
+            </div>
+
+            <div class="col-12">
+                <label for="id_description" class="form-label">Опис</label>
+                {{ form.description|add_class:"form-control" }}
+            </div>
+
+            <div class="col-12">
+                <label for="id_image" class="form-label">Завантажити зображення (необов'язково)</label>
+                {{ form.image|add_class:"form-control" }}
+            </div>
+
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-dark w-100">Додайте свій автомобіль</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

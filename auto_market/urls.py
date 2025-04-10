@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('brands_filter/<slug:brand_name>/', views.home, name='brands_filter'),
-    path('author/', include('author.urls')),
+    path('user/', include('author.urls')),
     path('brand/', include('brand.urls')),
     path('car/', include('car.urls')),
 ]

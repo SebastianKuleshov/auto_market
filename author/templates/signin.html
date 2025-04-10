@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 30vh; margin-top: 40px;">
+    <div class="w-100" style="max-width: 400px;">
+        <h4 class="text-center mb-4 fw-bold">Увійдіть&nbsp;до&nbsp;свого&nbsp;облікового&nbsp;запису</h4>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Ім'я користувача</label>
+                <input type="text" name="username" class="form-control" id="id_username" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_password" class="form-label">Пароль</label>
+                <input type="password" name="password" class="form-control" id="id_password" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark">Увійти</button>
+            </div>
+        </form>
+
+        <p class="text-center mt-3">
+            Немає облікового запису? <a href="{% url 'signup' %}">Зареєструватися</a>
+        </p>
+
+        <div class="bg-light p-3 mt-4 rounded text-center small">
+            <strong>Демо-акаунт</strong><br>
+            <span><strong>Ім'я користувача:</strong> user</span><br>
+            <span><strong>Пароль:</strong> Superpassword1234!</span><br>
+        </div>
+    </div>
+</div>
+{% endblock %}

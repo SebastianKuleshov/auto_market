@@ -48,11 +48,29 @@
         .custom-bg {
             background-color: #f1f5f9;
         }
+        .form-label {
+            font-weight: 600;
+        }
     </style>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
     {% include 'navbar.html' %}
+
+    <div class="toast-container position-fixed" style="top: 70px; right: 15px; z-index: 1055;">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="toast align-items-center text-bg-{{ message.tags }} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 
     <main class="flex-grow-1">
         {% block content %}{% endblock %}

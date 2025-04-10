@@ -2,46 +2,27 @@
 {% load static %}
 
 
-{% block title %}Find Your Perfect Used Car{% endblock %}
+{% block title %}Знайдіть свою ідеальну вживану машину{% endblock %}
 
 {% block content %}
 <div class="hero">
     <div class="container">
-        <h1 class="display-5 fw-bold">Find Your Perfect Used Car</h1>
-        <p class="lead mb-4 font-weight: 500;" style="font-weight: 500;">Browse and sell used cars with ease</p>
-        <a href="{% url 'browse_cars' %}" class="btn btn-dark btn-lg me-2">Browse Cars</a>
-        <a href="{% url 'add_car' %}" class="btn btn-light btn-lg">Sell Your Car</a>
+        <h1 class="display-5 fw-bold">Знайдіть свою ідеальну вживану машину</h1>
+        <p class="lead mb-4 font-weight: 500;" style="font-weight: 500;">Переглядайте та продавайте вживані автомобілі з легкістю</p>
+        <a href="{% url 'browse_cars' %}" class="btn btn-dark btn-lg me-2">Переглянути автомобілі</a>
+        <a href="{% url 'add_car' %}" class="btn btn-light btn-lg">Продайте свій автомобіль</a>
     </div>
 </div>
 
 <div class="container">
     <div class="featured-header">
-        <h2 class="fw-bold">Featured Cars</h2>
-        <a href="{% url 'browse_cars' %}" class="text-decoration-none">View All</a>
+        <h2 class="fw-bold">Рекомендовані автомобілі</h2>
+        <a href="{% url 'browse_cars' %}" class="text-decoration-none">Переглянути всі</a>
     </div>
     <div class="row">
         {% for car in cars %}
         <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                {% if car.image %}
-                    <img src="{{ car.image.url }}" class="card-img-top" style="height: 200px; object-fit: contain;" alt="{{ car.name }}">
-                {% else %}
-                    <img src="{% static 'images\favicon\placeholder.png' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="No Image Available">
-                {% endif %}
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="card-title mb-0">{{ car.name }}</h5>
-                        <h6 class="fw-bold mb-0">${{ car.price|floatformat:0 }}</h6>
-                    </div>
-                    <div class="d-flex justify-content-between mt-2 text-muted">
-                        <p class="card-text mb-1"><span>Year:</span>{{ car.year }}</p>
-                        <p class="card-text mb-1"><span>Mileage:</span> {{ car.milage }} km</p>
-                    </div>
-                </div>
-                <div class="card-footer bg-white border-0 text-center pb-3">
-                    <a href="{% url 'car_detail' car.id %}" class="btn btn-outline-dark w-100" style="font-weight: 700;">View Details</a>
-                </div>
-            </div>
+            {% include 'car_card.html' with car=car %}
         </div>
         {% endfor %}
     </div>

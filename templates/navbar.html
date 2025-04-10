@@ -7,29 +7,29 @@
         <div class="collapse navbar-collapse" id="navContent">
             <ul class="navbar-nav justify-content-center mb-2 mb-lg-0 w-100">
                 <li class="nav-item">
-                    <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}">Головна</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if request.resolver_match.url_name == 'browse_cars' %} active{% endif %}" href="{% url 'browse_cars' %}">Browse Cars</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'browse_cars' %} active{% endif %}" href="{% url 'browse_cars' %}">Переглянути автомобілі</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if request.resolver_match.url_name == 'add_car' %} active{% endif %}" href="{% url 'add_car' %}">Sell Your Car</a>
+                    <a class="nav-link{% if request.resolver_match.url_name == 'add_car' %} active{% endif %}" href="{% url 'add_car' %}">Продати автомобіль</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link fw-bold text-nowrap" href="{% url 'profile' %}">My Profile</a>
+                    <a class="nav-link fw-bold text-nowrap" href="{% url 'profile' %}">Мій профіль</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-outline-dark ms-3 text-nowrap" href="{% url 'logout' %}">Log Out</a>
+                    <a class="btn btn-outline-dark ms-3 text-nowrap" href="{% url 'logout' %}">Вийти</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'login' %}">Увійти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                    <a class="nav-link" href="{% url 'signup' %}">Зареєструватися</a>
                 </li>
                 {% endif %}
             </ul>
