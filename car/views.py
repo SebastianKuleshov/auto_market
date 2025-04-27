@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Car
+from brand.models import Brand
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from . import forms
@@ -32,16 +33,29 @@ def car_detail(request, car_id):
 
     if request.method == 'POST':
         if 'buy_now' in request.POST:
-            if car.quantity > 0:
-                car.buyers.add(request.user)
-                car.quantity -= 1
+            if not car.buyer:
+                car.buyer = request.user
                 car.save()
-                messages.success(request, 'Car purchased successfully!')
+                messages.success(request, 'Авто успішно придбано!')
             else:
-                messages.error(request, 'Car is out of stock!')
+                messages.info(request, 'Авто вже придбано!')
 
     
     return render(request, 'car_detail.html', {'car': car})
 
 def browse_cars(request):
-    pass
+    brands = Brand.objects.all()
+
+    selected_brand = request.GET.get('brand')
+
+    if selected_brand:
+        brand = get_object_or_404(Brand, name=selected_brand)
+        cars = Car.objects.filter(brand=brand).select_related('brand', 'author')
+    else:
+        cars = Car.objects.all().select_related('brand', 'author')
+
+    return render(request, 'browse_cars.html', {
+        'cars': cars,
+        'brands': brands,
+        'selected_brand': selected_brand
+    })

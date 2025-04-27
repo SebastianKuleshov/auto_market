@@ -36,19 +36,9 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-3 mb-4">
-            <div class="p-4 text-center rounded custom-bg">
-                <div class="bg-secondary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 24px;">
-                    {{ user.first_name|first }}
-                </div>
-                <h5 class="mb-0">{{ user.get_full_name }}</h5>
-                <p class="text-muted small mb-3">{{ user.email }}</p>
-                <a href="{% url 'edit_profile' %}" class="btn btn-sm mb-2 w-100 bg-white fw-bold">Редагувати профіль</a>
-                <a href="{% url 'logout' %}" class="btn btn-sm w-100 bg-white fw-bold">Вийти</a>
-            </div>
-        </div>
 
-        
+        {% include 'user_profile_card.html' with buttons='edit_profile' %}
+
         <div class="col-md-9">            
             <h2 class="mb-4">Моя панель керування</h2>
             <div class="tab-switcher mb-4">

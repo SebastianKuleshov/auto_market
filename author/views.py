@@ -7,18 +7,11 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 
 
-from django.contrib.messages.views import SuccessMessageMixin
-from django.views.generic import CreateView
-from django.views import View
-
-from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView
-
 # Create your views here.
 
 @login_required
 def profile(request):
-    bought_cars = Car.objects.filter(buyers=request.user)
+    bought_cars = Car.objects.filter(buyer=request.user)
     listed_cars = Car.objects.filter(author=request.user)
 
     return render(request, 'profile.html', {'bought_cars': bought_cars, 'listed_cars': listed_cars})

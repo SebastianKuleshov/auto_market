@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 
 <div class="card h-100">
     {% if car.image %}
@@ -9,11 +10,11 @@
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">{{ car.name }}</h5>
-            <h6 class="fw-bold mb-0">${{ car.price|floatformat:0 }}</h6>
+            <h6 class="fw-bold mb-0">${{ car.price|floatformat:0|intspace }}</h6>
         </div>
         <div class="d-flex justify-content-between mt-2 text-muted">
             <p class="card-text mb-1"><span>Рік:</span> {{ car.year }} </p>
-            <p class="card-text mb-1"><span>Пробіг:</span> {{ car.milage }} км</p>
+            <p class="card-text mb-1"><span>Пробіг:</span> {{ car.milage|intspace }} км</p>
         </div>
     </div>
     <div class="card-footer bg-white border-0 text-center pb-3">

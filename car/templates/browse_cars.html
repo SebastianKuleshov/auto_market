@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Перегляд Авто{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+
+    <h2 class="fw-bold mb-4">Перегляд Вживаних Авто</h2>
+
+    <div class="p-4 rounded mb-4 custom-bg">
+        <form method="GET" class="d-flex flex-wrap align-items-center gap-3" id="filterForm">
+            <div class="d-flex flex-column">
+                <label for="brand" class="form-label mb-1 fw-bold">Фільтрувати за Маркою</label>
+                <select name="brand" id="brand" class="form-select" style="min-width: 200px;" onchange="document.getElementById('filterForm').submit();">
+                    <option value="">Усі Марки</option>
+                    {% for brand in brands %}
+                        <option value="{{ brand.name }}" {% if request.GET.brand == brand.name %}selected{% endif %}>
+                            {{ brand.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <a href="{% url 'browse_cars' %}" class="btn btn-outline-secondary align-self-end" style="background-color: white; border-color: #ced4da; color: black; font-weight: 500;">Очистити Фільтр</a>
+        </form>
+    </div>
+
+    <p class="mb-4">{{ cars|length }} авто знайдено</p>
+
+    <div class="row g-4">
+        {% for car in cars %}
+        <div class="col-12 col-sm-6 col-md-4">
+            {% include 'car_card.html' with car=car %}
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

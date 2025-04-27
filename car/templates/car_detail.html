@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}{{ car.name }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+    <div class="row mb-5">
+        <div class="col-md-6 text-center">
+            {% if car.image %}
+                <img src="{{ car.image.url }}" alt="{{ car.name }} Image" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
+            {% else %}
+                <img src="{% static 'images\favicon\placeholder.png' %}" alt="No Image Available" class="img-fluid rounded" style="max-height: 400px;">
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="fw-bold">{{ car.name }}</h2>
+            <p class="text-muted">{{ car.location }}</p>
+
+            <h3 class="fw-bold mb-3">${{ car.price|floatformat:0|intspace }}</h3>
+
+            <div class="row mb-3">
+                <div class="col-sm-6">
+                    <div class="p-2 rounded text-center custom-bg">
+                        <small class="text-muted">Рік</small>
+                        <div class="fw-bold">{{ 2012 }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="p-2 rounded text-center custom-bg">
+                        <small class="text-muted">Пробіг</small>
+                        <div class="fw-bold">{{ 5000|intspace }} км</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 rounded mb-3 custom-bg">
+                <strong>Опис</strong>
+                <p class="mb-0">{{ car.description }}</p>
+            </div>
+
+            <div class="p-3 rounded mb-4 custom-bg">
+                <strong>Продавець</strong>
+                <p class="mb-0">Seller name</p>
+            </div>
+
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex gap-2">
+                        <button type="submit" name="buy_now" class="btn btn-dark">Купити зараз</button>
+                        <a href="#" class="btn btn-outline-dark text-nowrap" data-bs-toggle="modal" data-bs-target="#emailModal">Зв'язатися з продавцем</a>
+                    </div>
+                </form>
+            {% else %}
+                <p class="mt-3"><a href="{% url 'login' %}">Увійдіть</a>, щоб купити або зв'язатися з продавцем.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emailModalLabel">Зв'язатися з продавцем</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Email:</strong> {{car.author.email}} </p>
+                    <p>Ви можете скопіювати адресу електронної пошти вище, щоб зв'язатися з продавцем.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
