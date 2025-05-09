@@ -11,19 +11,29 @@
     <h2 class="fw-bold mb-4">Перегляд Вживаних Авто</h2>
 
     <div class="p-4 rounded mb-4 custom-bg">
-        <form method="GET" class="d-flex flex-wrap align-items-center gap-3" id="filterForm">
-            <div class="d-flex flex-column">
-                <label for="brand" class="form-label mb-1 fw-bold">Фільтрувати за Маркою</label>
-                <select name="brand" id="brand" class="form-select" style="min-width: 200px;" onchange="document.getElementById('filterForm').submit();">
-                    <option value="">Усі Марки</option>
-                    {% for brand in brands %}
-                        <option value="{{ brand.name }}" {% if request.GET.brand == brand.name %}selected{% endif %}>
-                            {{ brand.name }}
-                        </option>
-                    {% endfor %}
-                </select>
+        <form method="GET" class="d-flex flex-wrap align-items-center gap-3 flex-column" id="filterForm" style="align-items: start !important;">
+            <div class="d-flex gap-3">
+                <div class="flex flex-column gap-3">
+                    <label for="brand" class="form-label mb-1 fw-bold">Фільтрувати за Маркою</label>
+                    <select name="brand" id="brand" class="form-select" style="min-width: 200px;" onchange="document.getElementById('filterForm').submit();">
+                        <option value="">Усі Марки</option>
+                        {% for brand in brands %}
+                            <option value="{{ brand.name }}" {% if request.GET.brand == brand.name %}selected{% endif %}>
+                                {{ brand.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <a href="{% url 'browse_cars' %}" class="btn btn-outline-secondary align-self-end" style="background-color: white; border-color: #ced4da; color: black; font-weight: 500;">Очистити Фільтр</a>
             </div>
-            <a href="{% url 'browse_cars' %}" class="btn btn-outline-secondary align-self-end" style="background-color: white; border-color: #ced4da; color: black; font-weight: 500;">Очистити Фільтр</a>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="available" id="available" value="true"
+                       {% if request.GET.available %}checked{% endif %}
+                       onchange="document.getElementById('filterForm').submit();">
+                <label class="form-check-label" for="available">
+                    Є в наявності
+                </label>
+            </div>
         </form>
     </div>
 

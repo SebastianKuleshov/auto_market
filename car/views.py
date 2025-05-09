@@ -47,6 +47,7 @@ def browse_cars(request):
     brands = Brand.objects.all()
 
     selected_brand = request.GET.get('brand')
+    available = request.GET.get('available')
 
     if selected_brand:
         brand = get_object_or_404(Brand, name=selected_brand)
@@ -54,8 +55,12 @@ def browse_cars(request):
     else:
         cars = Car.objects.all().select_related('brand', 'author')
 
+    if available:
+        cars = cars.filter(buyer__isnull=True)
+
     return render(request, 'browse_cars.html', {
         'cars': cars,
         'brands': brands,
-        'selected_brand': selected_brand
+        'selected_brand': selected_brand,
+        'available': available,
     })
