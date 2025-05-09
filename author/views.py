@@ -23,7 +23,7 @@ def signup(request):
         if request.method == 'POST':
             form = forms.RegisterForm(request.POST)
             if form.is_valid():
-                messages.success(request, 'Account created successfully')
+                messages.success(request, 'Аккаунт успішно створено!')
                 form.save()
                 return redirect('login')
             else:
@@ -50,10 +50,10 @@ def user_login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    messages.success(request, 'Logged In Successfully')
+                    messages.success(request, 'Вітаємо, ви успішно увійшли в систему!')
                     return redirect(next_url)
                 else:
-                    messages.error(request, 'Invalid username or password')            
+                    messages.error(request, 'Неправильне ім\'я користувача або пароль. Спробуйте ще раз.')            
             else:
                 errors = []
                 for field, field_errors in form.errors.items():
@@ -69,7 +69,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    messages.info(request, "Logged Out Successfully")
+    messages.info(request, "Ви вийшли з системи. Сподіваємось, ви повернетесь!")
     return redirect('home')
 
 
@@ -99,11 +99,11 @@ def edit_profile(request):
         edit_profile_form = forms.EditProfileForm(request.POST, instance=request.user)
         if edit_profile_form.is_valid():
             messages.success(
-                request, 'Your user data was successfully updated.')
+                request, 'Ваші дані користувача були успішно оновлені.')
             edit_profile_form.save()
             return redirect('profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Будь ласка, виправте помилку нижче.')
     else:
         edit_profile_form = forms.EditProfileForm(instance=request.user)
     return render(request, 'edit_profile.html', {'form': edit_profile_form})
