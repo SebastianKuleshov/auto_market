@@ -4,7 +4,7 @@
 {% load static %}
 {% load custom_filters %}
 
-{% block title %}{{ car.name }}{% endblock %}
+{% block title %}{{ car.model }}{% endblock %}
 
 {% block content %}
 <div class="container my-5">
@@ -12,14 +12,14 @@
     <div class="row mb-5">
         <div class="col-md-6 text-center">
             {% if car.image %}
-                <img src="{{ car.image.url }}" alt="{{ car.name }} Image" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
+                <img src="{{ car.image.url }}" alt="{{ car.model }} Image" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
             {% else %}
                 <img src="{% static 'images\favicon\placeholder.png' %}" alt="No Image Available" class="img-fluid rounded" style="max-height: 400px;">
             {% endif %}
         </div>
 
         <div class="col-md-6">
-            <h2 class="fw-bold">{{ car.name }}</h2>
+            <h2 class="fw-bold">{{ car.brand }} {{ car.model }}</h2>
             <p class="text-muted">{{ car.location }}</p>
 
             <h3 class="fw-bold mb-3">${{ car.price|floatformat:0|intspace }}</h3>

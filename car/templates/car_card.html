@@ -6,13 +6,13 @@
         <span class="position-absolute top-0 start-0 bg-danger text-white px-3 py-1 rounded-end" style="font-size: 0.9rem; font-weight: 600;">Продано</span>
     {% endif %}
     {% if car.image %}
-        <img src="{{ car.image.url }}" class="card-img-top" style="height: 200px; object-fit: contain;" alt="{{ car.name }}">
+        <img src="{{ car.image.url }}" class="card-img-top" style="height: 200px; object-fit: contain;" alt="{{ car.model }}">
     {% else %}
         <img src="{% static 'images\favicon\placeholder.png' %}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="No Image Available">
     {% endif %}
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title mb-0">{{ car.name }}</h5>
+            <h5 class="card-title mb-0">{{ car.brand }} {{ car.model }}</h5>
             <h6 class="fw-bold mb-0">${{ car.price|floatformat:0|intspace }}</h6>
         </div>
         <div class="d-flex justify-content-between mt-2 text-muted">
